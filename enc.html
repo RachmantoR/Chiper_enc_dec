@@ -1,0 +1,63 @@
+<html>
+
+<body>
+
+<input type="text" id="text"><br>
+<input type="text" id="key"><br>
+
+<button onclick="enc()">Encrypt</button><br>
+
+<div id="display"></div>
+
+<script>
+
+function enc() {
+
+    let textInput = document.getElementById("text").value;
+    let keyInput = document.getElementById("key").value;
+    let display = document.getElementById("display");
+
+    let text = textInput;
+    let keymap = "";
+    let key = keyInput;
+
+    let keymapIndex = [];
+    let textIndex = [];
+
+    let sample = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,.=?!/{}()[] ";
+
+    let encText = "";
+
+    for(i = 0; i < text.length; i++){
+
+        keymap +=  key[i % key.length];
+
+    }
+
+    for(i = 0; i < keymap.length; i++){
+
+        keymapIndex.push(sample.indexOf(keymap[i % keymap.length]));
+
+    }
+
+    for(i = 0; i < text.length; i++){
+
+        textIndex.push(sample.indexOf(text[i % text.length]));
+
+    }
+
+    for(i = 0; i < text.length; i++){
+
+        encText += sample[(keymapIndex[i % keymapIndex.length] + textIndex[i % textIndex.length]) % sample.length];
+
+    }
+
+    display.innerHTML = encText;
+
+}
+    
+</script>
+
+</body>
+
+</html>

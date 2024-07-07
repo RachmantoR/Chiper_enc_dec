@@ -1,0 +1,64 @@
+<html>
+
+<body>
+
+<input type="text" id="text"><br>
+<input type="text" id="key"><br>
+
+<button onclick="dec()">Decrypt</button><br>
+
+<div id="display"></div>
+
+<script>
+
+function dec() {
+
+    let textInput = document.getElementById("text").value;
+    let keyInput = document.getElementById("key").value;
+    let display = document.getElementById("display");
+
+    let encText = textInput;
+    let keymap = "";
+    let key = keyInput;
+
+    let keymapIndex = [];
+    let encTextIndex = [];
+
+    let sample = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,.=?!/{}()[] ";
+
+    let resindex = [];
+    let decText = "";
+
+    for(i = 0; i < encText.length; i++){
+
+        keymap += key[i % key.length];
+
+    }
+
+    for(i = 0; i < encText.length; i++){
+
+        encTextIndex.push(sample.indexOf(encText[i % encText.length]));
+
+    }
+
+    for(i = 0; i < keymap.length; i++){
+
+        keymapIndex.push(sample.indexOf(keymap[i % keymap.length]));
+
+    }
+
+    for(i = 0; i < encText.length; i++){
+
+        decText += sample[(encTextIndex[i % encTextIndex.length] - keymapIndex[i % keymapIndex.length]) % sample.length < 0 ? (((encTextIndex[i % encTextIndex.length] - keymapIndex[i % keymapIndex.length]) % sample.length) % sample.length + sample.length) % sample.length : (encTextIndex[i % encTextIndex.length] - keymapIndex[i % keymapIndex.length]) % sample.length];
+
+    }
+
+    display.innerHTML = decText;
+
+}
+    
+</script>
+    
+</body>
+
+</html>
